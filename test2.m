@@ -10,8 +10,12 @@ maxstage = 1;
 pcorr = @(x,y) 100*abs(corr(x,y));
 
 for p=1:skip:patlen
-    clc; disp([num2str(patlen - p) ' remaining...']);
-    pat = patient(p);
+    if mod(patlen-p,100) == 0
+		clc;
+		disp([num2str(patlen - p) ' remaining...']);
+    end
+	
+	pat = patient(p);
     trialnum = 1;
     next = false;
     
