@@ -25,7 +25,7 @@ for k = 1:length(pdcell)
     
     % write patient data
     for m = 1:pdsize(1)
-        fprintf(file, '%s,', patids(m));
+        fprintf(file, '%s,', patids(m,:));
         
         % write individual piece of data
         for n = 1:pdsize(2)
