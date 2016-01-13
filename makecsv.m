@@ -5,7 +5,8 @@ end
 
 % iterate through all five simulations (for five max stages)
 for k = 1:length(pdcell)
-    file = fopen(['pat_data_max_stage_' num2str(k-1)]);
+    file = fopen(['pat_data_max_stage_' num2str(k-1) ...
+        '.csv'], 'w');
     patdata = pdcell{k};
     patids = patdata{1};
     patdata = patdata{2};
@@ -28,7 +29,7 @@ for k = 1:length(pdcell)
         
         % write individual piece of data
         for n = 1:pdsize(2)
-            fprintf(file, '%f', patdata(m,n));
+            fprintf(file, '%.15f', patdata(m,n));
             
             if n < pdsize(2)
                 fprintf(file, ',');
