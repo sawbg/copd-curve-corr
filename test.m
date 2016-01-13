@@ -1,12 +1,38 @@
 clc; format shortg;
 if exist('patient','var') == 0, load('patient_vol_flow.mat'); end
 
+pcorr = @(x,y) corr(x,y);
+
 patlen = length(patient);
 pcount = 0;
 skip = 1;
+patids = [];
+pdcell = cell(1,5);
 
-%pcorr = @(x,y) 100*abs(corr(x,y));
-pcorr = @(x,y) corr(x,y);
+pdcolnames = {
+    'SID',
+    'Final Gold',
+    'pctEmph_Slicer',
+    'pctGasTrap_Slicer',
+    'Vol Max 2-der Value',
+    'Vol Max 2-der Index',
+    'Flow Max 2-der Value',
+    'Flow Max 2-der Index',
+    'Vol Norm',
+    'Flow Norm',
+    'Vol Geo Mean',
+    'Flow Geo Mean',
+    'Exp2 a',
+    'Exp2 b',
+    'Exp2 c',
+    'Exp2 d',
+    'Exp2 abs(r)',
+    'Poly3 p1',
+    'Poly3 p2',
+    'Poly3 p3',
+    'Poly3 p4',
+    'Poly3 abs(r)'
+    };
 
 for maxstage=0:4
     disp(['MAX STAGE: ' num2str(maxstage)]);
@@ -45,6 +71,7 @@ for maxstage=0:4
             pcount = pcount + 1;
         end
         
+        patids = [patids; pat.SID];
         patdata(pcount,1) = pat.finalGold;
         patdata(pcount,2) = pat.pctEmph_Slicer;
         patdata(pcount,3) = pat.pctGasTrap_Slicer;
@@ -87,6 +114,7 @@ for maxstage=0:4
         end
     end
     
+    pdcell{maxstage+1} = {patids, patdata};    
     disp('');
     
     fprintf(['Parameter\tEmp. Time-Volume\tEmp. Volume-Flow\t' ...
